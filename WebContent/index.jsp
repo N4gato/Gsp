@@ -17,10 +17,11 @@
 ArrayList<Positions> list =new ArrayList<Positions>();
 PrintWriter o = response.getWriter();
 list = (ArrayList<Positions>) request.getAttribute("positionListe");
-int i=0;
-Positions p = list.get(i);
 
-o.println(p.getId());
+for(Positions p : list){
+	o.println(p.getId());
+	o.println(p.getLongitude());
+}
 
 %>
 </body>

@@ -37,6 +37,7 @@ public class Connect extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		int i=0;
 		response.setContentType("text/html");
 	    PrintWriter out = response.getWriter();
 
@@ -105,25 +106,18 @@ public class Connect extends HttpServlet {
 		    positions1.setTime(time);
 		    positions1.setValid(valid);
 		    positions1.setDevice_id(device_id);
-		    
+		   		   
+		    positionListe.add(i , positions1);
+		  
 		   
-		    positionListe.add(positions1);
-		   // positionListe.clear();
-		    
-		   /* 
-		    String nextJSP = "/map.jsp";
-		    RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);
-		    dispatcher.forward(request,response);
-		    */ 
-		    request.setAttribute( "positionListe", positionListe );
-		    //request.getRequestDispatcher( "/map.jsp" ).forward( request, response );
-		    
-		    this.getServletContext().getRequestDispatcher( "/index.jsp").forward( request, response );
-		    
 		    
 		}
 		
-
+		 request.setAttribute( "positionListe", positionListe );
+		    //request.getRequestDispatcher( "/map.jsp" ).forward( request, response );
+		    
+		 this.getServletContext().getRequestDispatcher( "/index.jsp").forward( request, response );
+		 positionListe.clear();
 		
 		} catch ( SQLException e ) {
 		/* Gérer les éventuelles erreurs ici */
