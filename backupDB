@@ -1,0 +1,195 @@
+-- MySQL dump 10.13  Distrib 5.5.37, for debian-linux-gnu (x86_64)
+--
+-- Host: localhost    Database: gps
+-- ------------------------------------------------------
+-- Server version	5.5.37-0+wheezy1
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `application_settings`
+--
+
+DROP TABLE IF EXISTS `application_settings`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `application_settings` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `registrationEnabled` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `application_settings`
+--
+
+LOCK TABLES `application_settings` WRITE;
+/*!40000 ALTER TABLE `application_settings` DISABLE KEYS */;
+INSERT INTO `application_settings` VALUES (1,1);
+/*!40000 ALTER TABLE `application_settings` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `devices`
+--
+
+DROP TABLE IF EXISTS `devices`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `devices` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `uniqueId` varchar(255) DEFAULT NULL,
+  `latestPosition_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK5CF8ACDD7C6208C3` (`latestPosition_id`),
+  CONSTRAINT `FK5CF8ACDD7C6208C3` FOREIGN KEY (`latestPosition_id`) REFERENCES `positions` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `devices`
+--
+
+LOCK TABLES `devices` WRITE;
+/*!40000 ALTER TABLE `devices` DISABLE KEYS */;
+INSERT INTO `devices` VALUES (1,'nagato','1',NULL),(3,'youssef','863591021250802',135);
+/*!40000 ALTER TABLE `devices` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `positions`
+--
+
+DROP TABLE IF EXISTS `positions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `positions` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `address` varchar(255) DEFAULT NULL,
+  `altitude` double DEFAULT NULL,
+  `course` double DEFAULT NULL,
+  `latitude` double DEFAULT NULL,
+  `longitude` double DEFAULT NULL,
+  `other` varchar(255) DEFAULT NULL,
+  `power` double DEFAULT NULL,
+  `speed` double DEFAULT NULL,
+  `time` datetime DEFAULT NULL,
+  `valid` tinyint(1) DEFAULT NULL,
+  `device_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK65C08C6ADB0C3B8A` (`device_id`),
+  KEY `positionsIndex` (`device_id`,`time`),
+  CONSTRAINT `FK65C08C6ADB0C3B8A` FOREIGN KEY (`device_id`) REFERENCES `devices` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=136 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `positions`
+--
+
+LOCK TABLES `positions` WRITE;
+/*!40000 ALTER TABLE `positions` DISABLE KEYS */;
+INSERT INTO `positions` VALUES (1,NULL,58.7,0,54.9043766,23.8889766,'<info><protocol>ruptela</protocol><satellites>12</satellites><hdop>0.7</hdop></info>',NULL,0,'2014-04-23 12:10:32',1,3),(2,NULL,45.8,0,34.2585733,-6.5823566,'<info><protocol>ruptela</protocol><satellites>4</satellites><hdop>2.1</hdop></info>',NULL,0,'2014-06-04 16:43:58',1,3),(3,NULL,30,206.2,34.2586666,-6.582295,'<info><protocol>ruptela</protocol><satellites>4</satellites><hdop>2.1</hdop></info>',NULL,1.079914,'2014-06-04 16:44:58',1,3),(4,NULL,13.2,206.2,34.2585366,-6.5823066,'<info><protocol>ruptela</protocol><satellites>5</satellites><hdop>1.7</hdop></info>',NULL,0,'2014-06-04 16:45:58',1,3),(5,NULL,0.9,206.2,34.2584466,-6.5823033,'<info><protocol>ruptela</protocol><satellites>5</satellites><hdop>1.7</hdop></info>',NULL,0,'2014-06-04 16:46:58',1,3),(6,NULL,2.3,206.2,34.2584766,-6.5823483,'<info><protocol>ruptela</protocol><satellites>5</satellites><hdop>1.7</hdop></info>',NULL,0,'2014-06-04 16:47:58',1,3),(7,NULL,8.4,206.2,34.25851,-6.582325,'<info><protocol>ruptela</protocol><satellites>5</satellites><hdop>1.7</hdop></info>',NULL,0,'2014-06-04 16:48:58',1,3),(8,NULL,442.7,0,34.0092233,-4.9852733,'<info><protocol>ruptela</protocol><satellites>4</satellites><hdop>2.9</hdop><io5>0</io5><io27>26</io27><io28>1</io28><io22>0</io22><io65>0</io65></info>',NULL,0,'2014-07-04 15:03:51',1,3),(9,NULL,472.9,138.8,34.0091916,-4.9852416,'<info><protocol>ruptela</protocol><satellites>6</satellites><hdop>1.1</hdop><io5>0</io5><io27>22</io27><io28>1</io28><io22>0</io22><io65>0</io65></info>',NULL,0,'2014-07-04 15:27:31',1,3),(10,NULL,472.6,138.8,34.00919,-4.9852416,'<info><protocol>ruptela</protocol><satellites>6</satellites><hdop>1.1</hdop><io5>1</io5><io27>22</io27><io28>1</io28><io22>0</io22><io65>0</io65></info>',NULL,0,'2014-07-04 15:27:33',1,3),(11,NULL,472.4,138.8,34.009185,-4.9852416,'<info><protocol>ruptela</protocol><satellites>6</satellites><hdop>1.1</hdop><io5>0</io5><io27>22</io27><io28>1</io28><io22>0</io22><io65>0</io65></info>',NULL,0,'2014-07-04 15:27:36',1,3),(12,NULL,459.5,138.8,34.0091766,-4.9851866,'<info><protocol>ruptela</protocol><satellites>7</satellites><hdop>1.0</hdop><io5>0</io5><io27>22</io27><io28>1</io28><io22>0</io22><io65>0</io65></info>',NULL,0,'2014-07-04 15:28:14',1,3),(13,NULL,459.6,138.8,34.0091766,-4.985185,'<info><protocol>ruptela</protocol><satellites>7</satellites><hdop>1.0</hdop><io5>1</io5><io27>22</io27><io28>1</io28><io22>0</io22><io65>0</io65></info>',NULL,0,'2014-07-04 15:28:16',1,3),(14,NULL,458.3,68.3,34.0091716,-4.9851733,'<info><protocol>ruptela</protocol><satellites>6</satellites><hdop>1.1</hdop><io5>1</io5><io27>22</io27><io28>1</io28><io22>0</io22><io65>1</io65></info>',NULL,3.779699,'2014-07-04 15:28:28',1,3),(15,NULL,435.5,75.5,34.0094216,-4.9839533,'<info><protocol>ruptela</protocol><satellites>7</satellites><hdop>1.0</hdop><io5>1</io5><io27>22</io27><io28>1</io28><io22>0</io22><io65>116</io65></info>',NULL,12.958968,'2014-07-04 15:28:58',1,3),(16,NULL,442,115.8,34.0098516,-4.9824466,'<info><protocol>ruptela</protocol><satellites>7</satellites><hdop>1.0</hdop><io5>1</io5><io27>22</io27><io28>1</io28><io22>0</io22><io65>269</io65></info>',NULL,9.719226,'2014-07-04 15:29:23',1,3),(17,NULL,444.3,146.7,34.0097616,-4.9823766,'<info><protocol>ruptela</protocol><satellites>7</satellites><hdop>1.0</hdop><io5>1</io5><io27>22</io27><io28>1</io28><io22>0</io22><io65>279</io65></info>',NULL,13.498925,'2014-07-04 15:29:25',1,3),(18,NULL,473,173.7,34.0085566,-4.981495,'<info><protocol>ruptela</protocol><satellites>7</satellites><hdop>1.0</hdop><io5>1</io5><io27>22</io27><io28>1</io28><io22>0</io22><io65>443</io65></info>',NULL,3.239742,'2014-07-04 15:29:50',1,3),(19,NULL,456.4,199.1,34.0083933,-4.9815,'<info><protocol>ruptela</protocol><satellites>6</satellites><hdop>1.1</hdop><io5>1</io5><io27>22</io27><io28>1</io28><io22>0</io22><io65>458</io65></info>',NULL,8.639312,'2014-07-04 15:29:56',1,3),(20,NULL,440.3,224.2,34.0076066,-4.9821966,'<info><protocol>ruptela</protocol><satellites>7</satellites><hdop>1.0</hdop><io5>1</io5><io27>22</io27><io28>1</io28><io22>0</io22><io65>569</io65></info>',NULL,7.559398,'2014-07-04 15:30:09',1,3),(21,NULL,440.3,223.4,34.0075383,-4.9823316,'<info><protocol>ruptela</protocol><satellites>7</satellites><hdop>1.0</hdop><io5>1</io5><io27>22</io27><io28>1</io28><io22>0</io22><io65>587</io65></info>',NULL,0,'2014-07-04 15:30:39',1,3),(22,NULL,440.4,223.4,34.00756,-4.9823266,'<info><protocol>ruptela</protocol><satellites>7</satellites><hdop>1.0</hdop><io5>1</io5><io27>22</io27><io28>1</io28><io22>0</io22><io65>587</io65></info>',NULL,0,'2014-07-04 15:31:09',1,3),(23,NULL,450,223.4,34.0076183,-4.98227,'<info><protocol>ruptela</protocol><satellites>7</satellites><hdop>1.0</hdop><io5>1</io5><io27>22</io27><io28>1</io28><io22>0</io22><io65>587</io65></info>',NULL,0,'2014-07-04 15:31:39',1,3),(24,NULL,456.8,223.4,34.0076266,-4.982265,'<info><protocol>ruptela</protocol><satellites>7</satellites><hdop>1.0</hdop><io5>1</io5><io27>4</io27><io28>1</io28><io22>0</io22><io65>587</io65></info>',NULL,0,'2014-07-04 15:32:09',1,3),(25,NULL,456.9,223.4,34.0076266,-4.98228,'<info><protocol>ruptela</protocol><satellites>7</satellites><hdop>1.0</hdop><io5>0</io5><io27>0</io27><io28>1</io28><io22>0</io22><io65>587</io65></info>',NULL,0,'2014-07-04 15:32:21',1,3),(26,NULL,444.5,223.4,34.007655,-4.982295,'<info><protocol>ruptela</protocol><satellites>8</satellites><hdop>1.0</hdop><io5>0</io5><io27>30</io27><io28>1</io28><io22>0</io22><io65>587</io65></info>',NULL,0,'2014-07-04 16:11:25',1,3),(27,NULL,446.9,223.4,34.0075133,-4.98228,'<info><protocol>ruptela</protocol><satellites>8</satellites><hdop>1.0</hdop><io5>1</io5><io27>30</io27><io28>1</io28><io22>0</io22><io65>587</io65></info>',NULL,0,'2014-07-04 16:11:28',1,3),(28,NULL,438.2,221.8,34.0067633,-4.9830716,'<info><protocol>ruptela</protocol><satellites>9</satellites><hdop>0.8</hdop><io5>1</io5><io27>30</io27><io28>1</io28><io22>0</io22><io65>690</io65></info>',NULL,15.658753,'2014-07-04 16:11:55',1,3),(29,NULL,432.7,223.4,34.00533,-4.9846833,'<info><protocol>ruptela</protocol><satellites>7</satellites><hdop>1.0</hdop><io5>1</io5><io27>30</io27><io28>1</io28><io22>0</io22><io65>912</io65></info>',NULL,6.479484,'2014-07-04 16:12:25',1,3),(30,NULL,444.4,223.1,34.004555,-4.9856166,'<info><protocol>ruptela</protocol><satellites>7</satellites><hdop>1.0</hdop><io5>1</io5><io27>30</io27><io28>1</io28><io22>0</io22><io65>1034</io65></info>',NULL,7.0194410000000005,'2014-07-04 16:12:55',1,3),(31,NULL,432.9,259.9,34.0046633,-4.9859116,'<info><protocol>ruptela</protocol><satellites>6</satellites><hdop>1.1</hdop><io5>1</io5><io27>30</io27><io28>1</io28><io22>0</io22><io65>1054</io65></info>',NULL,0,'2014-07-04 16:13:25',1,3),(32,NULL,431.9,259.9,34.004615,-4.9858483,'<info><protocol>ruptela</protocol><satellites>6</satellites><hdop>1.1</hdop><io5>1</io5><io27>30</io27><io28>1</io28><io22>0</io22><io65>1054</io65></info>',NULL,0,'2014-07-04 16:13:55',1,3),(33,NULL,426.7,259.9,34.0046166,-4.9858766,'<info><protocol>ruptela</protocol><satellites>5</satellites><hdop>2.3</hdop><io5>1</io5><io27>30</io27><io28>1</io28><io22>0</io22><io65>1054</io65></info>',NULL,0,'2014-07-04 16:14:26',1,3),(34,NULL,428.5,259.9,34.0046116,-4.9858783,'<info><protocol>ruptela</protocol><satellites>6</satellites><hdop>1.0</hdop><io5>0</io5><io27>30</io27><io28>1</io28><io22>0</io22><io65>1054</io65></info>',NULL,0,'2014-07-04 16:14:35',1,3),(35,NULL,457.6,259.9,34.0046116,-4.9858783,'<info><protocol>ruptela</protocol><satellites>7</satellites><hdop>1.1</hdop><io5>0</io5><io27>23</io27><io28>1</io28><io22>0</io22><io65>1054</io65></info>',NULL,0,'2014-07-04 16:19:32',1,3),(36,NULL,438.9,259.9,34.0046116,-4.9858783,'<info><protocol>ruptela</protocol><satellites>7</satellites><hdop>1.1</hdop><io5>0</io5><io27>23</io27><io28>1</io28><io22>0</io22><io65>1054</io65></info>',NULL,0,'2014-07-04 16:38:39',1,3),(37,NULL,440.4,128.2,34.0045616,-4.985775,'<info><protocol>ruptela</protocol><satellites>7</satellites><hdop>1.0</hdop><io5>1</io5><io27>23</io27><io28>1</io28><io22>0</io22><io65>1054</io65></info>',NULL,0,'2014-07-04 16:38:42',1,3),(38,NULL,443.6,156.1,34.0045383,-4.9857333,'<info><protocol>ruptela</protocol><satellites>8</satellites><hdop>0.9</hdop><io5>1</io5><io27>23</io27><io28>1</io28><io22>0</io22><io65>1057</io65></info>',NULL,0,'2014-07-04 16:39:09',1,3),(39,NULL,441.8,41.5,34.004575,-4.9856516,'<info><protocol>ruptela</protocol><satellites>9</satellites><hdop>0.9</hdop><io5>1</io5><io27>23</io27><io28>1</io28><io22>0</io22><io65>1063</io65></info>',NULL,2.6997850000000003,'2014-07-04 16:39:21',1,3),(40,NULL,447.9,47.9,34.0048366,-4.9852366,'<info><protocol>ruptela</protocol><satellites>9</satellites><hdop>0.9</hdop><io5>1</io5><io27>23</io27><io28>1</io28><io22>0</io22><io65>1109</io65></info>',NULL,0,'2014-07-04 16:39:51',1,3),(41,NULL,447.7,19.8,34.004855,-4.9852183,'<info><protocol>ruptela</protocol><satellites>9</satellites><hdop>0.9</hdop><io5>1</io5><io27>23</io27><io28>1</io28><io22>0</io22><io65>1110</io65></info>',NULL,3.239742,'2014-07-04 16:39:57',1,3),(42,NULL,442.5,46.3,34.0050433,-4.98506,'<info><protocol>ruptela</protocol><satellites>8</satellites><hdop>0.9</hdop><io5>1</io5><io27>23</io27><io28>1</io28><io22>0</io22><io65>1134</io65></info>',NULL,10.259183,'2014-07-04 16:40:03',1,3),(43,NULL,441.2,73.8,34.0051516,-4.98486,'<info><protocol>ruptela</protocol><satellites>7</satellites><hdop>1.0</hdop><io5>1</io5><io27>23</io27><io28>1</io28><io22>0</io22><io65>1158</io65></info>',NULL,7.0194410000000005,'2014-07-04 16:40:08',1,3),(44,NULL,439.6,101,34.0051383,-4.984765,'<info><protocol>ruptela</protocol><satellites>7</satellites><hdop>1.6</hdop><io5>1</io5><io27>23</io27><io28>1</io28><io22>0</io22><io65>1166</io65></info>',NULL,9.179269,'2014-07-04 16:40:10',1,3),(45,NULL,439.8,73,34.0051433,-4.98454,'<info><protocol>ruptela</protocol><satellites>8</satellites><hdop>1.3</hdop><io5>1</io5><io27>23</io27><io28>1</io28><io22>0</io22><io65>1189</io65></info>',NULL,7.559398,'2014-07-04 16:40:14',1,3),(46,NULL,440.4,22.1,34.0054066,-4.9838533,'<info><protocol>ruptela</protocol><satellites>6</satellites><hdop>3.5</hdop><io5>1</io5><io27>23</io27><io28>1</io28><io22>0</io22><io65>1261</io65></info>',NULL,9.179269,'2014-07-04 16:40:25',1,3),(47,NULL,432.8,54.5,34.0056766,-4.9836533,'<info><protocol>ruptela</protocol><satellites>8</satellites><hdop>1.5</hdop><io5>1</io5><io27>23</io27><io28>1</io28><io22>0</io22><io65>1298</io65></info>',NULL,5.399570000000001,'2014-07-04 16:40:32',1,3),(48,NULL,439.4,170.1,34.00569,-4.983645,'<info><protocol>ruptela</protocol><satellites>8</satellites><hdop>1.5</hdop><io5>1</io5><io27>23</io27><io28>1</io28><io22>0</io22><io65>1313</io65></info>',NULL,3.239742,'2014-07-04 16:40:42',1,3),(49,NULL,441.3,276.8,34.0056066,-4.9837333,'<info><protocol>ruptela</protocol><satellites>6</satellites><hdop>3.4</hdop><io5>1</io5><io27>23</io27><io28>1</io28><io22>0</io22><io65>1322</io65></info>',NULL,0,'2014-07-04 16:41:12',1,3),(50,NULL,442.3,276.8,34.0056466,-4.9837616,'<info><protocol>ruptela</protocol><satellites>7</satellites><hdop>1.3</hdop><io5>1</io5><io27>6</io27><io28>1</io28><io22>0</io22><io65>1322</io65></info>',NULL,0,'2014-07-04 16:41:42',1,3),(51,NULL,448.2,276.8,34.0056716,-4.983805,'<info><protocol>ruptela</protocol><satellites>7</satellites><hdop>1.1</hdop><io5>1</io5><io27>18</io27><io28>1</io28><io22>0</io22><io65>1322</io65></info>',NULL,0,'2014-07-04 16:42:12',1,3),(52,NULL,454.4,223.6,34.0056466,-4.98384,'<info><protocol>ruptela</protocol><satellites>8</satellites><hdop>2.1</hdop><io5>1</io5><io27>18</io27><io28>1</io28><io22>0</io22><io65>1323</io65></info>',NULL,0,'2014-07-04 16:42:42',1,3),(53,NULL,461.2,177.5,34.0056333,-4.9838916,'<info><protocol>ruptela</protocol><satellites>7</satellites><hdop>1.8</hdop><io5>1</io5><io27>18</io27><io28>1</io28><io22>0</io22><io65>1326</io65></info>',NULL,0,'2014-07-04 16:43:12',1,3),(54,NULL,468.3,177.5,34.0055816,-4.983925,'<info><protocol>ruptela</protocol><satellites>6</satellites><hdop>3.3</hdop><io5>1</io5><io27>18</io27><io28>1</io28><io22>0</io22><io65>1328</io65></info>',NULL,0,'2014-07-04 16:43:42',1,3),(55,NULL,469.7,233.6,34.0055416,-4.9839666,'<info><protocol>ruptela</protocol><satellites>6</satellites><hdop>3.2</hdop><io5>1</io5><io27>18</io27><io28>1</io28><io22>0</io22><io65>1334</io65></info>',NULL,5.939527,'2014-07-04 16:43:52',1,3),(56,NULL,468,208.1,34.00543,-4.9840566,'<info><protocol>ruptela</protocol><satellites>7</satellites><hdop>1.3</hdop><io5>1</io5><io27>18</io27><io28>1</io28><io22>0</io22><io65>1347</io65></info>',NULL,5.939527,'2014-07-04 16:43:56',1,3),(57,NULL,462.9,234,34.00527,-4.9841983,'<info><protocol>ruptela</protocol><satellites>6</satellites><hdop>3.2</hdop><io5>1</io5><io27>18</io27><io28>1</io28><io22>0</io22><io65>1372</io65></info>',NULL,7.559398,'2014-07-04 16:44:03',1,3),(58,NULL,455.1,259.6,34.0051716,-4.984445,'<info><protocol>ruptela</protocol><satellites>6</satellites><hdop>3.2</hdop><io5>1</io5><io27>18</io27><io28>1</io28><io22>0</io22><io65>1395</io65></info>',NULL,9.179269,'2014-07-04 16:44:09',1,3),(59,NULL,454.4,289.1,34.005195,-4.98458,'<info><protocol>ruptela</protocol><satellites>8</satellites><hdop>2.2</hdop><io5>1</io5><io27>18</io27><io28>1</io28><io22>0</io22><io65>1408</io65></info>',NULL,9.179269,'2014-07-04 16:44:12',1,3),(60,NULL,453.5,328.7,34.0052816,-4.9846516,'<info><protocol>ruptela</protocol><satellites>8</satellites><hdop>1.0</hdop><io5>1</io5><io27>18</io27><io28>1</io28><io22>0</io22><io65>1417</io65></info>',NULL,11.879054,'2014-07-04 16:44:14',1,3),(61,NULL,452.9,353.7,34.0054116,-4.98468,'<info><protocol>ruptela</protocol><satellites>9</satellites><hdop>0.9</hdop><io5>1</io5><io27>18</io27><io28>1</io28><io22>0</io22><io65>1431</io65></info>',NULL,14.578839,'2014-07-04 16:44:16',1,3),(62,NULL,450.3,33,34.0057133,-4.9846633,'<info><protocol>ruptela</protocol><satellites>8</satellites><hdop>0.9</hdop><io5>1</io5><io27>18</io27><io28>1</io28><io22>0</io22><io65>1468</io65></info>',NULL,7.559398,'2014-07-04 16:44:22',1,3),(63,NULL,449.9,72.2,34.0057233,-4.9846,'<info><protocol>ruptela</protocol><satellites>8</satellites><hdop>0.9</hdop><io5>1</io5><io27>18</io27><io28>1</io28><io22>0</io22><io65>1475</io65></info>',NULL,4.859613,'2014-07-04 16:44:24',1,3),(64,NULL,449.4,46.1,34.0057883,-4.9844616,'<info><protocol>ruptela</protocol><satellites>9</satellites><hdop>0.9</hdop><io5>1</io5><io27>18</io27><io28>1</io28><io22>0</io22><io65>1489</io65></info>',NULL,6.479484,'2014-07-04 16:44:29',1,3),(65,NULL,448.5,21.8,34.0061366,-4.9841916,'<info><protocol>ruptela</protocol><satellites>8</satellites><hdop>0.9</hdop><io5>1</io5><io27>18</io27><io28>1</io28><io22>0</io22><io65>1535</io65></info>',NULL,12.958968,'2014-07-04 16:44:38',1,3),(66,NULL,445,46.5,34.00725,-4.983645,'<info><protocol>ruptela</protocol><satellites>7</satellites><hdop>2.2</hdop><io5>1</io5><io27>18</io27><io28>1</io28><io22>0</io22><io65>1663</io65></info>',NULL,15.118796,'2014-07-04 16:44:56',1,3),(67,NULL,443,359.9,34.007465,-4.9833733,'<info><protocol>ruptela</protocol><satellites>9</satellites><hdop>0.9</hdop><io5>1</io5><io27>18</io27><io28>1</io28><io22>0</io22><io65>1712</io65></info>',NULL,8.639312,'2014-07-04 16:45:03',1,3),(68,NULL,445.1,49.6,34.0076183,-4.9833183,'<info><protocol>ruptela</protocol><satellites>7</satellites><hdop>1.3</hdop><io5>1</io5><io27>18</io27><io28>1</io28><io22>0</io22><io65>1736</io65></info>',NULL,9.179269,'2014-07-04 16:45:08',1,3),(69,NULL,443.3,79.2,34.0076883,-4.983,'<info><protocol>ruptela</protocol><satellites>7</satellites><hdop>1.5</hdop><io5>1</io5><io27>18</io27><io28>1</io28><io22>0</io22><io65>1765</io65></info>',NULL,10.259183,'2014-07-04 16:45:14',1,3),(70,NULL,447.7,104.4,34.0077516,-4.98268,'<info><protocol>ruptela</protocol><satellites>8</satellites><hdop>1.5</hdop><io5>1</io5><io27>18</io27><io28>1</io28><io22>0</io22><io65>1801</io65></info>',NULL,2.6997850000000003,'2014-07-04 16:45:24',1,3),(71,NULL,457,104.4,34.00778,-4.9826866,'<info><protocol>ruptela</protocol><satellites>7</satellites><hdop>1.4</hdop><io5>0</io5><io27>18</io27><io28>1</io28><io22>0</io22><io65>1806</io65></info>',NULL,0,'2014-07-04 16:45:36',1,3),(72,NULL,473.5,104.4,34.00778,-4.9826866,'<info><protocol>ruptela</protocol><satellites>9</satellites><hdop>1.0</hdop><io5>0</io5><io27>28</io27><io28>1</io28><io22>0</io22><io65>1806</io65></info>',NULL,0,'2014-07-04 17:45:24',1,3),(73,NULL,477.8,104.4,34.00778,-4.9826866,'<info><protocol>ruptela</protocol><satellites>11</satellites><hdop>0.8</hdop><io5>0</io5><io27>29</io27><io28>1</io28><io22>0</io22><io65>1806</io65></info>',NULL,0,'2014-07-04 18:45:24',1,3),(74,NULL,474.2,104.4,34.00778,-4.9826866,'<info><protocol>ruptela</protocol><satellites>9</satellites><hdop>1.0</hdop><io5>0</io5><io27>28</io27><io28>1</io28><io22>0</io22><io65>1806</io65></info>',NULL,0,'2014-07-04 19:45:24',1,3),(75,NULL,478.6,104.4,34.00778,-4.9826866,'<info><protocol>ruptela</protocol><satellites>10</satellites><hdop>1.0</hdop><io5>0</io5><io27>28</io27><io28>1</io28><io22>0</io22><io65>1806</io65></info>',NULL,0,'2014-07-04 20:45:24',1,3),(76,NULL,491.1,104.4,34.00778,-4.9826866,'<info><protocol>ruptela</protocol><satellites>10</satellites><hdop>1.9</hdop><io5>0</io5><io27>28</io27><io28>1</io28><io22>0</io22><io65>1806</io65></info>',NULL,0,'2014-07-04 21:45:24',1,3),(77,NULL,460.5,104.4,34.00778,-4.9826866,'<info><protocol>ruptela</protocol><satellites>9</satellites><hdop>1.1</hdop><io5>0</io5><io27>28</io27><io28>1</io28><io22>0</io22><io65>1806</io65></info>',NULL,0,'2014-07-04 22:45:24',1,3),(78,NULL,461.5,104.4,34.00778,-4.9826866,'<info><protocol>ruptela</protocol><satellites>10</satellites><hdop>0.9</hdop><io5>0</io5><io27>29</io27><io28>1</io28><io22>0</io22><io65>1806</io65></info>',NULL,0,'2014-07-04 23:45:24',1,3),(79,NULL,484.1,104.4,34.00778,-4.9826866,'<info><protocol>ruptela</protocol><satellites>9</satellites><hdop>1.1</hdop><io5>0</io5><io27>29</io27><io28>1</io28><io22>0</io22><io65>1806</io65></info>',NULL,0,'2014-07-05 00:45:24',1,3),(80,NULL,466.4,104.4,34.00778,-4.9826866,'<info><protocol>ruptela</protocol><satellites>11</satellites><hdop>0.9</hdop><io5>0</io5><io27>29</io27><io28>1</io28><io22>0</io22><io65>1806</io65></info>',NULL,0,'2014-07-05 01:45:24',1,3),(81,NULL,464.5,104.4,34.00778,-4.9826866,'<info><protocol>ruptela</protocol><satellites>10</satellites><hdop>1.0</hdop><io5>0</io5><io27>29</io27><io28>1</io28><io22>0</io22><io65>1806</io65></info>',NULL,0,'2014-07-05 02:45:24',1,3),(82,NULL,456.3,104.4,34.00778,-4.9826866,'<info><protocol>ruptela</protocol><satellites>9</satellites><hdop>1.3</hdop><io5>0</io5><io27>10</io27><io28>1</io28><io22>0</io22><io65>1806</io65></info>',NULL,0,'2014-07-05 03:23:01',1,3),(83,NULL,470.2,104.4,34.00778,-4.9826866,'<info><protocol>ruptela</protocol><satellites>10</satellites><hdop>0.9</hdop><io5>0</io5><io27>29</io27><io28>1</io28><io22>0</io22><io65>1806</io65></info>',NULL,0,'2014-07-05 03:45:24',1,3),(84,NULL,483.6,0,34.0077033,-4.9826583,'<info><protocol>ruptela</protocol><satellites>7</satellites><hdop>1.4</hdop><io5>0</io5><io27>29</io27><io28>1</io28><io22>0</io22><io65>1806</io65></info>',NULL,0,'2014-07-05 04:12:04',1,3),(85,NULL,536.7,0,34.0077033,-4.9826583,'<info><protocol>ruptela</protocol><satellites>8</satellites><hdop>1.3</hdop><io5>0</io5><io27>29</io27><io28>1</io28><io22>0</io22><io65>1806</io65></info>',NULL,0,'2014-07-05 04:21:07',1,3),(86,NULL,460,0,34.0077033,-4.9826583,'<info><protocol>ruptela</protocol><satellites>9</satellites><hdop>0.9</hdop><io5>0</io5><io27>29</io27><io28>1</io28><io22>0</io22><io65>1806</io65></info>',NULL,0,'2014-07-05 05:12:04',1,3),(87,NULL,468,0,34.0077033,-4.9826583,'<info><protocol>ruptela</protocol><satellites>10</satellites><hdop>0.8</hdop><io5>0</io5><io27>29</io27><io28>1</io28><io22>0</io22><io65>1806</io65></info>',NULL,0,'2014-07-05 05:50:14',1,3),(88,NULL,478.1,0,34.0077033,-4.9826583,'<info><protocol>ruptela</protocol><satellites>8</satellites><hdop>0.8</hdop><io5>0</io5><io27>29</io27><io28>1</io28><io22>0</io22><io65>1806</io65></info>',NULL,0,'2014-07-05 06:12:04',1,3),(89,NULL,462.5,0,34.0077033,-4.9826583,'<info><protocol>ruptela</protocol><satellites>6</satellites><hdop>1.2</hdop><io5>0</io5><io27>29</io27><io28>1</io28><io22>0</io22><io65>1806</io65></info>',NULL,0,'2014-07-05 07:12:04',1,3),(90,NULL,498,0,34.0077033,-4.9826583,'<info><protocol>ruptela</protocol><satellites>6</satellites><hdop>1.2</hdop><io5>0</io5><io27>29</io27><io28>1</io28><io22>0</io22><io65>1806</io65></info>',NULL,0,'2014-07-05 08:12:04',1,3),(91,NULL,485.9,0,34.0077033,-4.9826583,'<info><protocol>ruptela</protocol><satellites>8</satellites><hdop>0.9</hdop><io5>0</io5><io27>29</io27><io28>1</io28><io22>0</io22><io65>1806</io65></info>',NULL,0,'2014-07-05 09:12:04',1,3),(92,NULL,451.6,0,34.0077033,-4.9826583,'<info><protocol>ruptela</protocol><satellites>8</satellites><hdop>1.1</hdop><io5>0</io5><io27>29</io27><io28>1</io28><io22>0</io22><io65>1806</io65></info>',NULL,0,'2014-07-05 09:53:55',1,3),(93,NULL,452.2,244.2,34.0077683,-4.98249,'<info><protocol>ruptela</protocol><satellites>8</satellites><hdop>1.1</hdop><io5>1</io5><io27>29</io27><io28>1</io28><io22>0</io22><io65>1806</io65></info>',NULL,0.539957,'2014-07-05 09:53:59',1,3),(94,NULL,446.5,128.3,34.007685,-4.982585,'<info><protocol>ruptela</protocol><satellites>8</satellites><hdop>1.1</hdop><io5>0</io5><io27>0</io27><io28>1</io28><io22>0</io22><io65>1822</io65></info>',NULL,0,'2014-07-05 09:54:23',1,3),(95,NULL,450.9,128.3,34.007685,-4.982585,'<info><protocol>ruptela</protocol><satellites>6</satellites><hdop>2.0</hdop><io5>0</io5><io27>21</io27><io28>1</io28><io22>0</io22><io65>1822</io65></info>',NULL,0,'2014-07-05 10:53:55',1,3),(96,NULL,486,128.3,34.007685,-4.982585,'<info><protocol>ruptela</protocol><satellites>7</satellites><hdop>1.2</hdop><io5>0</io5><io27>24</io27><io28>1</io28><io22>0</io22><io65>1822</io65></info>',NULL,0,'2014-07-05 11:53:55',1,3),(97,NULL,496.9,128.3,34.007685,-4.982585,'<info><protocol>ruptela</protocol><satellites>7</satellites><hdop>1.1</hdop><io5>0</io5><io27>19</io27><io28>1</io28><io22>0</io22><io65>1822</io65></info>',NULL,0,'2014-07-05 12:53:55',1,3),(98,NULL,519.8,128.3,34.007685,-4.982585,'<info><protocol>ruptela</protocol><satellites>5</satellites><hdop>1.7</hdop><io5>0</io5><io27>21</io27><io28>1</io28><io22>0</io22><io65>1822</io65></info>',NULL,0,'2014-07-05 13:53:55',1,3),(99,NULL,470.3,128.3,34.007685,-4.982585,'<info><protocol>ruptela</protocol><satellites>6</satellites><hdop>1.2</hdop><io5>0</io5><io27>19</io27><io28>1</io28><io22>0</io22><io65>1822</io65></info>',NULL,0,'2014-07-05 14:53:55',1,3),(100,NULL,465.6,128.3,34.007685,-4.982585,'<info><protocol>ruptela</protocol><satellites>8</satellites><hdop>1.2</hdop><io5>0</io5><io27>21</io27><io28>1</io28><io22>0</io22><io65>1822</io65></info>',NULL,0,'2014-07-05 15:53:55',1,3),(101,NULL,481.3,128.3,34.007685,-4.982585,'<info><protocol>ruptela</protocol><satellites>8</satellites><hdop>1.2</hdop><io5>0</io5><io27>19</io27><io28>1</io28><io22>0</io22><io65>1822</io65></info>',NULL,0,'2014-07-05 16:53:55',1,3),(102,NULL,480.7,128.3,34.007685,-4.982585,'<info><protocol>ruptela</protocol><satellites>8</satellites><hdop>1.1</hdop><io5>0</io5><io27>20</io27><io28>1</io28><io22>0</io22><io65>1822</io65></info>',NULL,0,'2014-07-05 17:53:55',1,3),(103,NULL,474.9,128.3,34.007685,-4.982585,'<info><protocol>ruptela</protocol><satellites>9</satellites><hdop>1.1</hdop><io5>0</io5><io27>19</io27><io28>1</io28><io22>0</io22><io65>1822</io65></info>',NULL,0,'2014-07-05 18:53:55',1,3),(104,NULL,461.1,128.3,34.007685,-4.982585,'<info><protocol>ruptela</protocol><satellites>10</satellites><hdop>0.8</hdop><io5>0</io5><io27>19</io27><io28>1</io28><io22>0</io22><io65>1822</io65></info>',NULL,0,'2014-07-05 19:53:55',1,3),(105,NULL,470.1,128.3,34.007685,-4.982585,'<info><protocol>ruptela</protocol><satellites>8</satellites><hdop>1.1</hdop><io5>0</io5><io27>19</io27><io28>1</io28><io22>0</io22><io65>1822</io65></info>',NULL,0,'2014-07-05 20:53:55',1,3),(106,NULL,477.5,128.3,34.007685,-4.982585,'<info><protocol>ruptela</protocol><satellites>9</satellites><hdop>0.9</hdop><io5>0</io5><io27>22</io27><io28>1</io28><io22>0</io22><io65>1822</io65></info>',NULL,0,'2014-07-05 21:53:55',1,3),(107,NULL,474.9,128.3,34.007685,-4.982585,'<info><protocol>ruptela</protocol><satellites>9</satellites><hdop>1.0</hdop><io5>0</io5><io27>22</io27><io28>1</io28><io22>0</io22><io65>1822</io65></info>',NULL,0,'2014-07-05 22:53:55',1,3),(108,NULL,479.8,128.3,34.007685,-4.982585,'<info><protocol>ruptela</protocol><satellites>9</satellites><hdop>1.0</hdop><io5>0</io5><io27>22</io27><io28>1</io28><io22>0</io22><io65>1822</io65></info>',NULL,0,'2014-07-05 23:53:55',1,3),(109,NULL,472.9,128.3,34.007685,-4.982585,'<info><protocol>ruptela</protocol><satellites>8</satellites><hdop>1.3</hdop><io5>0</io5><io27>19</io27><io28>1</io28><io22>0</io22><io65>1822</io65></info>',NULL,0,'2014-07-06 00:53:55',1,3),(110,NULL,504.7,128.3,34.007685,-4.982585,'<info><protocol>ruptela</protocol><satellites>9</satellites><hdop>1.3</hdop><io5>0</io5><io27>19</io27><io28>1</io28><io22>0</io22><io65>1822</io65></info>',NULL,0,'2014-07-06 01:53:55',1,3),(111,NULL,478.9,128.3,34.007685,-4.982585,'<info><protocol>ruptela</protocol><satellites>9</satellites><hdop>1.0</hdop><io5>0</io5><io27>19</io27><io28>1</io28><io22>0</io22><io65>1822</io65></info>',NULL,0,'2014-07-06 02:53:55',1,3),(112,NULL,471.3,128.3,34.007685,-4.982585,'<info><protocol>ruptela</protocol><satellites>8</satellites><hdop>1.1</hdop><io5>0</io5><io27>19</io27><io28>1</io28><io22>0</io22><io65>1822</io65></info>',NULL,0,'2014-07-06 03:53:55',1,3),(113,NULL,476.7,128.3,34.007685,-4.982585,'<info><protocol>ruptela</protocol><satellites>10</satellites><hdop>0.9</hdop><io5>0</io5><io27>19</io27><io28>1</io28><io22>0</io22><io65>1822</io65></info>',NULL,0,'2014-07-06 04:53:55',1,3),(114,NULL,484,128.3,34.007685,-4.982585,'<info><protocol>ruptela</protocol><satellites>9</satellites><hdop>0.9</hdop><io5>0</io5><io27>19</io27><io28>1</io28><io22>0</io22><io65>1822</io65></info>',NULL,0,'2014-07-06 05:53:55',1,3),(115,NULL,456.7,128.3,34.007685,-4.982585,'<info><protocol>ruptela</protocol><satellites>8</satellites><hdop>1.1</hdop><io5>0</io5><io27>19</io27><io28>1</io28><io22>0</io22><io65>1822</io65></info>',NULL,0,'2014-07-06 06:53:55',1,3),(116,NULL,465.6,128.3,34.007685,-4.982585,'<info><protocol>ruptela</protocol><satellites>8</satellites><hdop>0.9</hdop><io5>0</io5><io27>19</io27><io28>1</io28><io22>0</io22><io65>1822</io65></info>',NULL,0,'2014-07-06 07:53:55',1,3),(117,NULL,486.5,128.3,34.007685,-4.982585,'<info><protocol>ruptela</protocol><satellites>8</satellites><hdop>0.9</hdop><io5>0</io5><io27>19</io27><io28>1</io28><io22>0</io22><io65>1822</io65></info>',NULL,0,'2014-07-06 08:53:55',1,3),(118,NULL,449.3,128.3,34.007685,-4.982585,'<info><protocol>ruptela</protocol><satellites>8</satellites><hdop>1.0</hdop><io5>0</io5><io27>19</io27><io28>1</io28><io22>0</io22><io65>1822</io65></info>',NULL,0,'2014-07-06 09:53:55',1,3),(119,NULL,448.6,128.3,34.007685,-4.982585,'<info><protocol>ruptela</protocol><satellites>7</satellites><hdop>1.9</hdop><io5>0</io5><io27>19</io27><io28>1</io28><io22>0</io22><io65>1822</io65></info>',NULL,0,'2014-07-06 10:53:55',1,3),(120,NULL,466.2,128.3,34.007685,-4.982585,'<info><protocol>ruptela</protocol><satellites>7</satellites><hdop>1.2</hdop><io5>0</io5><io27>21</io27><io28>1</io28><io22>0</io22><io65>1822</io65></info>',NULL,0,'2014-07-06 11:53:55',1,3),(121,NULL,485.2,306.5,34.0078866,-4.9828116,'<info><protocol>ruptela</protocol><satellites>6</satellites><hdop>1.6</hdop><io5>0</io5><io27>18</io27><io28>1</io28><io22>0</io22><io65>1822</io65></info>',NULL,0,'2014-07-06 12:31:12',1,3),(122,NULL,485.4,306.5,34.007885,-4.9828116,'<info><protocol>ruptela</protocol><satellites>6</satellites><hdop>1.6</hdop><io5>1</io5><io27>18</io27><io28>1</io28><io22>0</io22><io65>1822</io65></info>',NULL,0,'2014-07-06 12:31:13',1,3),(123,NULL,469.8,0,34.0077066,-4.98255,'<info><protocol>ruptela</protocol><satellites>4</satellites><hdop>2.6</hdop><io5>0</io5><io27>25</io27><io28>1</io28><io22>0</io22><io65>1822</io65></info>',NULL,0,'2014-07-06 12:33:21',1,3),(124,NULL,486.4,0,34.0077066,-4.98255,'<info><protocol>ruptela</protocol><satellites>5</satellites><hdop>2.1</hdop><io5>0</io5><io27>25</io27><io28>1</io28><io22>0</io22><io65>1822</io65></info>',NULL,0,'2014-07-06 13:33:21',1,3),(125,NULL,475,0,34.0077066,-4.98255,'<info><protocol>ruptela</protocol><satellites>6</satellites><hdop>1.2</hdop><io5>0</io5><io27>25</io27><io28>1</io28><io22>0</io22><io65>1822</io65></info>',NULL,0,'2014-07-06 14:33:21',1,3),(126,NULL,490.9,0,34.0077066,-4.98255,'<info><protocol>ruptela</protocol><satellites>6</satellites><hdop>1.1</hdop><io5>0</io5><io27>25</io27><io28>1</io28><io22>0</io22><io65>1822</io65></info>',NULL,0,'2014-07-06 15:33:21',1,3),(127,NULL,446.4,0,34.0077066,-4.98255,'<info><protocol>ruptela</protocol><satellites>7</satellites><hdop>1.5</hdop><io5>0</io5><io27>22</io27><io28>1</io28><io22>0</io22><io65>1822</io65></info>',NULL,0,'2014-07-06 16:33:22',1,3),(128,NULL,487.3,0,34.0077066,-4.98255,'<info><protocol>ruptela</protocol><satellites>9</satellites><hdop>1.0</hdop><io5>0</io5><io27>25</io27><io28>1</io28><io22>0</io22><io65>1822</io65></info>',NULL,0,'2014-07-06 17:33:21',1,3),(129,NULL,489.6,0,34.0077066,-4.98255,'<info><protocol>ruptela</protocol><satellites>11</satellites><hdop>0.8</hdop><io5>0</io5><io27>25</io27><io28>1</io28><io22>0</io22><io65>1822</io65></info>',NULL,0,'2014-07-06 18:33:21',1,3),(130,NULL,448.3,0,34.0077066,-4.98255,'<info><protocol>ruptela</protocol><satellites>7</satellites><hdop>1.1</hdop><io5>0</io5><io27>25</io27><io28>1</io28><io22>0</io22><io65>1822</io65></info>',NULL,0,'2014-07-06 19:33:21',1,3),(131,NULL,464.9,0,34.0077066,-4.98255,'<info><protocol>ruptela</protocol><satellites>9</satellites><hdop>1.0</hdop><io5>0</io5><io27>25</io27><io28>1</io28><io22>0</io22><io65>1822</io65></info>',NULL,0,'2014-07-06 20:33:21',1,3),(132,NULL,470.6,0,34.0077066,-4.98255,'<info><protocol>ruptela</protocol><satellites>11</satellites><hdop>0.8</hdop><io5>0</io5><io27>25</io27><io28>1</io28><io22>0</io22><io65>1822</io65></info>',NULL,0,'2014-07-06 21:33:21',1,3),(133,NULL,467.8,0,34.0077066,-4.98255,'<info><protocol>ruptela</protocol><satellites>10</satellites><hdop>1.2</hdop><io5>0</io5><io27>27</io27><io28>1</io28><io22>0</io22><io65>1822</io65></info>',NULL,0,'2014-07-06 22:33:21',1,3),(134,NULL,466.4,0,34.0077066,-4.98255,'<info><protocol>ruptela</protocol><satellites>10</satellites><hdop>0.9</hdop><io5>0</io5><io27>25</io27><io28>1</io28><io22>0</io22><io65>1822</io65></info>',NULL,0,'2014-07-06 23:33:21',1,3),(135,NULL,475.8,0,34.0077066,-4.98255,'<info><protocol>ruptela</protocol><satellites>8</satellites><hdop>1.4</hdop><io5>0</io5><io27>25</io27><io28>1</io28><io22>0</io22><io65>1822</io65></info>',NULL,0,'2014-07-07 00:33:21',1,3);
+/*!40000 ALTER TABLE `positions` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `user_settings`
+--
+
+DROP TABLE IF EXISTS `user_settings`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user_settings` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `speedUnit` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user_settings`
+--
+
+LOCK TABLES `user_settings` WRITE;
+/*!40000 ALTER TABLE `user_settings` DISABLE KEYS */;
+/*!40000 ALTER TABLE `user_settings` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `users`
+--
+
+DROP TABLE IF EXISTS `users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `users` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `admin` tinyint(1) DEFAULT NULL,
+  `login` varchar(255) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  `userSettings_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK6A68E0862018CAA` (`userSettings_id`),
+  CONSTRAINT `FK6A68E0862018CAA` FOREIGN KEY (`userSettings_id`) REFERENCES `user_settings` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `users`
+--
+
+LOCK TABLES `users` WRITE;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES (1,1,'admin','admin',NULL),(2,0,'ADMINi','9obi9aT/now*',NULL),(3,0,'meryam','azerty',NULL),(4,0,'nagato','nagato',NULL);
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `users_devices`
+--
+
+DROP TABLE IF EXISTS `users_devices`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `users_devices` (
+  `users_id` bigint(20) NOT NULL,
+  `devices_id` bigint(20) NOT NULL,
+  KEY `FK81E459A68294BA3` (`devices_id`),
+  KEY `FK81E459A6712480D` (`users_id`),
+  CONSTRAINT `FK81E459A6712480D` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`),
+  CONSTRAINT `FK81E459A68294BA3` FOREIGN KEY (`devices_id`) REFERENCES `devices` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `users_devices`
+--
+
+LOCK TABLES `users_devices` WRITE;
+/*!40000 ALTER TABLE `users_devices` DISABLE KEYS */;
+INSERT INTO `users_devices` VALUES (2,1),(4,3);
+/*!40000 ALTER TABLE `users_devices` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2014-07-14 12:16:41
