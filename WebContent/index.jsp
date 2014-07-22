@@ -5,6 +5,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+ 
+
 </head>
 <body>
  
@@ -12,17 +14,9 @@
 <%@ page import="com.beans.beans.Positions" %>
 <%@ page import="java.io.PrintWriter" %>
 
-<% 
+helloo
 
-ArrayList<Positions> list =new ArrayList<Positions>();
-PrintWriter o = response.getWriter();
-list = (ArrayList<Positions>) request.getAttribute("positionListe");
 
-for(Positions p : list){
-	o.println(p.getId());
-	o.println(p.getLongitude());
-}
 
-%>
 </body>
 </html>

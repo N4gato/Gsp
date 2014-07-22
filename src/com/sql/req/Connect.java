@@ -51,7 +51,7 @@ public class Connect extends HttpServlet {
 		}
 		
 		/* Connexion à la base de données */
-		String url = "jdbc:mysql://localhost:3306/db";
+		String url = "jdbc:mysql://localhost:3306/gps";
 		String utilisateur = "root";
 		String motDePasse = "123";
 		Connection connexion = null;
